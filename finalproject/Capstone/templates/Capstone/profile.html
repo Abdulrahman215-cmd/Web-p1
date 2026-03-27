@@ -1,0 +1,60 @@
+{% extends "Capstone/layout.html" %}
+{% load static %}
+
+
+{% block body %}
+<div class="reputation">
+    <div class="basic-header">{{ profile.user.username }}</div>
+        <div class="review">
+            {% if good_review_percentage >= 99 %}
+               <p>Perfect Score</p>
+            {% elif good_review_percentage >= 80 %}
+               <p>Trustworthy</p>
+            {% elif good_review_percentage >= 60 %}
+               <p>Almost Trustworthy</p>
+            {% elif good_review_percentage >= 45 %}
+               <p>Mixed</p>
+            {% elif good_review_percentage >= 1 %}
+               <p>Dont Trust Him</p>
+            {% else %}
+               <p>No Reviews</p>
+            {% endif %}
+        </div>
+        <ul class="count">
+            <li> Good Reviews: {{ good_review_count }}</li>
+            <hr>
+            <li> Bad Reviews: {{ bad_reviews_count }}</li>
+        </ul>
+    </div>
+</div>
+{% if profile.user != current_user %}
+    {% if comment_form %}
+        <div id="C-form">
+            <h3>Add a Comment:</h3>
+            <form method="post">
+                {% csrf_token %}
+                {{ comment_form.as_p }}
+                <button id="submit2" class="btn btn-primary" type="submit"  name="submit_comment">Submit Comment</button>
+            </form>
+        </div>
+    {% else %}
+        <h5 id="already">You have already reviewed this person.</h5>
+    {% endif %}
+{% endif %}
+<div id="C-section">
+    <h3>All Comments: {{ comment_count }}</h3>
+        <ul>
+            {% for comment in comments %}
+                <li>{{ comment.date|date:"M j" }}/  <span>{{ comment.user }}:
+                        {% if comment.review_type == 'Good' %}
+                            Positive Feedback
+                        {% else %}
+                            Negative Feedback
+                        {% endif %}
+                    </span>
+                    <p style="font-weight: bold; font-size: 26px;">{{  comment.comments  }} </p> 
+                </li>
+            {% endfor %}
+        </ul>
+</div>
+{% endblock %}

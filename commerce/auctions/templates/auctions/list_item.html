@@ -1,0 +1,120 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+{% if messages %}
+    {% for message in messages %}
+      <h5 class="alert alert-error">{{ message }}</h5>
+    {% endfor %}
+{% endif %}
+{% if in_watchlist %}
+    <form action="{% url 'toggle_watchlist' listed.title %}" method="post">
+        {% csrf_token %}
+        <button id="b2" type="submit">Remove From Watchlist</button>
+    </form>
+{% else %}
+    <form action="{% url 'toggle_watchlist' listed.title %}" method="post">
+        {% csrf_token %}
+        <button id="b1" type="submit">Add To Watchlist</button>
+    </form>
+{% endif %}
+<div style="border-collapse: collapse; font-family: Arial, Helvetica, sans-serif;">
+  {% if listed.image_url %}
+      <div class="image-container">
+          <img src="{{ listed.image_url }}">
+      </div>
+      <div id="position">
+          <h1>Title: {{ listed.title }}</h1>
+          <h2> Seller: <strong>{{ listed.seller }}</strong> </h2>
+          {% if listed.category == 'No Category' %}
+          <h3>No Category Listed</h3>
+          {% else %}
+          <h3>Category: {{ listed.category }}</h3>
+          {% endif %}
+          <h2 class="box">Description: {{ listed.description }}</h2>
+      </div>
+      <hr style="width: 1625px;
+      border: 1px solid rgb(208, 206, 206);
+      position: relative;
+      right: 190px;
+      bottom: 190px;">
+  {% else %}
+      <div>
+          <h1>Title: {{ listed.title }}</h1>
+          <h2> Seller: <strong>{{ listed.seller }}</strong> </h2>
+          {% if listed.category == 'No Category' %}
+          <h3>No Category Listed</h3>
+          {% else %}
+          <h3>Category: {{ listed.category }}</h3>
+          {% endif %}
+          <h2 class="box">Description: {{ listed.description }}</h2>
+      </div>
+      <hr style="width: 1259px;
+          border: 1px solid rgb(208, 206, 206);
+          position: relative;
+          top: 10px;
+          right: 373px;">
+  {% endif %}
+</div>
+<div class="{% if listed.image_url %} with-image {% endif %}">
+  <div>
+      <div id="d">
+        {% if not listed.is_active %}
+            {% if winner.username %}
+               <h2 id="para1">The Winner Is: <strong style="color: rgb(217, 110, 34);">{{ winner.username }}</strong></h2>  
+               <h3 id="para2">With The Bid Of: <strong style="color: #037303;">${{ highest_bid.amount }}</strong></h3>
+            {% else %}
+               <p id="para3"> There Are No Winnners</p>
+            {% endif %}
+        {% else %}
+        {% if request.user == listed.seller %}
+            <form method="post">
+                {% csrf_token %}
+                <p id="para">Click The Button Below To Close The Auction.</p>
+                <input type="hidden" name="close_auction" value="true">
+                <button id="but" type="submit">Close Auction</button>
+            </form>
+        {% else %}
+            <h2>Place a Bid:</h2>
+            <form method="post">
+                {% csrf_token %}
+                {{ bid_form.as_p }}
+                <button id="submit1" type="submit" name="submit_bid">Submit Bid</button>
+            </form>
+        {% endif %}
+      </div>
+    {% endif %}
+ </div>
+ <div id="d1">
+    <h2>All Bids: {{ bid_count }}</h2>
+    {% if highest_bid %}
+        <h3>The Highest Bidder Is: {{ highest_bid.user }}
+        <div>And His Bid Is: <strong style="color: #037303;">${{ highest_bid.amount }}</strong> </div></h3>
+    {% else %}
+        <h3>There Are No Bidders</h3>
+    {% endif %}
+ </div>
+ <hr style="width: 1050px;
+          border: 1px solid rgb(208, 206, 206);
+          position: relative;
+          right: 480px;
+          bottom: 160px;">
+    <div id="d2">
+         <h2>Add a Comment:</h2>
+        <form method="post">
+          {% csrf_token %}
+          {{ comment_form.as_p }}
+          <button id="submit2" type="submit"  name="submit_comment">Submit Comment</button>
+        </form>
+    </div>
+  <div id="d3">
+    <h2>All Comments: {{ comment_count }}</h2>
+   <ul>
+        {% for com in coms %}
+            <li>{{ com.date|date:"M j" }}/  <span>{{ com.user }}:</span> <p style="font-weight: bold; font-size: 28px;">{{ com.comments }}</p> </li>
+        {% empty %}
+        <h3>There Are No Comments.</h3>
+        {% endfor %}
+    </ul>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends "encyclopedia/layout.html" %}
+
+{% block body %}
+{% if partial_matches %}
+        <h3>What You Have Searched For Doesn't Exist, Did You Mean Any Of The Following?</h3>
+    <ul>
+    {% for result in partial_matches %}
+        <li><a href="{% url 'entry_page' result %}">{{ result }}</a></li>
+    {% endfor %}
+    </ul>
+{% endif %}
+{% endblock %}

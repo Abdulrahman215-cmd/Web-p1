@@ -1,0 +1,22 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+<h2>Listings in {{ category_name }}</h2>
+<div class="listing-container">
+   {% for list in listings %}
+   <div class="listing-box">
+      <a style="color: black;" href="{% url 'list_item' list.title %}">
+        <h3>Title: {{ list.title }}</h3>
+        <h5> Seller: <strong>{{ list.seller }}</strong> </h5>
+        <h4>Price: {{ list.starting_bid }}$</h4>
+        {% if list.image_url %}
+         <img src="{{ list.image_url }}">
+        {% endif %}  
+        <h5 style="inline-size: 600px;"> Description: {{ list.description }} </h5>
+      </a>
+    </div>
+    {% empty %}
+    <p id="para4">There Are No Listings For The Category You Selected.</p>
+    {% endfor %}
+</div>
+{% endblock %}

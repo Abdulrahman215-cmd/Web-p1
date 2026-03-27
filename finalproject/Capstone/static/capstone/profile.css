@@ -1,0 +1,78 @@
+.reputation {
+    margin-top: 10px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    left: 30px; 
+    background-color: #1f2a44;
+    color: #fff;
+    border-radius: 8px;
+    width: 300px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+  }
+  .basic-header {
+    background-color: #ffd700;
+    color: #000000;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    padding: 20px 40px;
+    position: relative;
+    right: 30px;
+    bottom: 20px;
+    width: 120%;
+  }
+
+  .review {
+    font-size: 20px;
+    font-weight: bold;
+    color: white;
+    margin-bottom: 20px;
+  }
+
+  .reputation ul {
+    list-style: none;
+    margin-bottom: 20px;
+  }
+  .reputation ul li {
+    position: relative;
+    right: 10px;
+    font-size: 14px;
+    color: #b8c1d1;
+    margin-bottom: 10px;
+    padding-left: 10px;
+  }
+
+  .count {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .count li {
+    margin-bottom: 10px;
+    font-size: 16px;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+  
+  #already {
+    position: relative;
+    left: 20px;
+    margin-top: 30px;
+    background-color: #e4dd8e;
+    width: 390px;
+    padding: 10px 20px;
+  }
+
+  #C-section, #C-form {
+    margin-top: 10px;
+    position: relative;
+    left: 10px;
+  }
+
+
+#submit2 {
+    position: relative;
+    bottom: 20px;
+}

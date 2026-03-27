@@ -1,0 +1,23 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+<h2>Your Watchlist</h2>
+<div class="listing-container">
+   {% for list in watchlist %}
+   <div class="listing-box">
+      <a style="color: black;" href="{% url 'list_item' list.listing.title %}">
+        <h3>Title: {{ list.listing.title }}</h3>
+        <h5> Seller: <strong>{{ list.listing.seller }}</strong> </h5>
+        <h4>Price: {{ list.listing.starting_bid }}$</h4>
+        {% if list.listing.image_url %}
+         <img src="{{ list.listing.image_url }}">
+        {% endif %}  
+        <h5 style="inline-size: 600px;"> Description: {{ list.listing.description }} </h5>
+         {% if not list.listing.is_active %}
+            <h2 style="color: red;">This auction is closed.</h2>
+         {% endif %}
+      </a>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

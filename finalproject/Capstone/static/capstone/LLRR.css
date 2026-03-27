@@ -1,0 +1,67 @@
+.custom-form {
+    width: 90%;
+  }
+  
+#log, #register {
+    margin-left: 2%;
+  }
+
+#log-p, #reg-p {
+    margin-top: 3px;
+
+}
+
+#log-h2, #reg-h2 {
+    position: relative;
+    right: 7px;
+}
+
+#navbar {
+  padding: 10px;
+  font-size: 18px;
+}
+
+#navbar ul {
+  gap: 10px;
+}
+
+.brand-size {
+  font-size: 20px; 
+}
+
+
+
+@media (max-width: 600px) {
+  #all-search, #direct {
+    width: 200px;
+  }
+
+  #search-query {
+    width: 170px;
+  }
+
+  .searchBar-section {
+    display: flex;
+    flex-direction: column;
+}
+
+  #submit_search {
+    width: 70px; 
+    position: relative;
+    top: 3px;
+}
+
+   #trafficButton {
+    position: relative;
+    top: 5px;
+  }
+
+  #hr, #hr1, .search-item, #starting-point, #ending-point {
+    width: 180px;
+  }
+
+  #submit_direct {
+    position: relative;
+    top: 2px;
+  }
+  }

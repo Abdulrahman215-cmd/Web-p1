@@ -1,0 +1,88 @@
+#map {
+    position: relative;
+    width: 100%;
+    height: 89vh;
+    z-index: 0;
+  }
+
+  #all-search, #direct {
+    width: 300px;
+    font-family: Arial, Helvetica, sans-serif;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: rgb(255, 255, 255);
+    padding: 10px;
+    z-index: 1;
+    border-radius: 5px;
+  }
+
+  #search-form {
+    width: 290px;
+  }
+  
+  .searchBar-section {
+    position: relative;
+    top: 7px;
+  }
+
+  .btn {
+    padding: 4px 10px;
+    font-size: 13px;
+  }
+  
+  #search-query {
+    position: relative;
+    top: 2px;
+    width: 200px;
+    padding: 1px;
+    font-size: 14px;
+  }
+
+  
+  #hr, #hr1 {
+    position: relative;
+    bottom: 5px;
+    right: 5px;
+    width: 280px;
+    border: 1px solid rgb(208, 206, 206);
+    margin-bottom: 1px;
+  }
+
+  .search-item {
+    width: 290px;
+  }
+
+  .search-item, .search-item1 {
+    margin-top: 1px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .search-item:hover, .search-item1:hover {
+    font-size: 14px;
+  }
+
+  .directBar-section {
+    position: relative;
+    top: 7px;
+  }
+
+  #starting-point {
+    width: 270px;
+  }
+
+  .endBar-section {
+    position: relative;
+    top: 4px;
+  }
+
+  #ending-point {
+    width: 203px;
+  }
+
+  #suggestions, #suggestions1 {
+    position: relative;
+    top: 4px;
+  }

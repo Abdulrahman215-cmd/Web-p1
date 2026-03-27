@@ -1,0 +1,93 @@
+{% extends "Capstone/layout.html" %}
+{% load static %}
+
+
+{% block body %}
+        <link href="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.css" rel="stylesheet">
+        <script src="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.js"></script>
+        <div id='map'>
+            <script>
+                // cs50 ai told me about using urls in javascript
+                const searchUrl = "{% url 'search' %}";
+                const directUrl = "{% url 'get_directions' %}";
+            </script>
+            <div id="all-search">
+                <div id="button-section">
+                    <button class="btn btn-secondary" type="button" onclick="showDirect()">Display Directions</button>
+                    {% if user.is_authenticated %}
+                        <button class="btn btn-danger" id="trafficButton" onclick="toggleTraffic()">Report Traffic</button>
+                    {% endif %}
+                </div>
+                <form method="POST" id="search-form" action="{% url 'search' %}">
+                    {% csrf_token %}
+                    <div class="searchBar-section">
+                        <input type="text" id="search-query" placeholder="Search for a place">
+                        <button class="btn btn-primary" id="submit_search" type="submit">Search</button>
+                    </div>
+                </form>
+                <div id="suggestions">
+                    {% for item in history %}
+                    <hr id="hr">
+                    <p class="search-item" data-query="{{ item.query }}">{{ item.query }}</p>
+                    {% endfor %}
+                </div>
+            </div>
+            <div id="direct" style="display: none;">
+                <div id="button-section">
+                    <button class="btn btn-secondary" type="button" onclick="showAllSearch()">Display Search</button>
+                    {% if user.is_authenticated %}
+                        <button class="btn btn-danger" id="trafficButton" onclick="toggleTraffic()">Report Traffic</button>
+                    {% endif %}
+                </div>
+                <form method="POST" id="direction" action="{% url 'get_directions' %}">
+                    {% csrf_token %}
+                    <div class="directBar-section">
+                        <input type="text" id="starting-point" placeholder="Choose starting-point">
+                        <div class="endBar-section">
+                            <input type="text" id="ending-point" placeholder="Choose ending-point">
+                            <button class="btn btn-primary" id="submit_direct" type="submit">Search</button>
+                        </div>
+                    </div>
+                </form>
+            
+                <div id="suggestions1">
+                    {% for item in history1 %}
+                        <hr id="hr1">
+                        <p class="search-item1" data-query="{{ item.start_location }} - {{ item.end_location }}">{{ item.start_location }} - {{ item.end_location }}</p>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <script>
+            const username = "{{ username }}";
+            const profileLink = `/profile/${username}/`;
+            const theUser = "{{ theUser }}";
+            function toggleTraffic() {
+                const button = document.querySelectorAll("#trafficButton");
+                button.forEach(function(button) {
+                    if (button.innerHTML === "Report Traffic") {
+                        button.innerHTML = "Stop Reporting";
+                        button.classList.remove('btn-danger')
+                        button.classList.add('btn-warning')
+                    } else {
+                        button.innerHTML = "Report Traffic";
+                        button.classList.remove('btn-warning')
+                        button.classList.add('btn-danger')
+                    }
+                });
+            }
+            function showAllSearch() {
+                document.getElementById('direct').style.display = 'none';
+                document.getElementById('all-search').style.display = 'block';
+            }
+            
+            function showDirect() {
+                document.getElementById('direct').style.display = 'block';
+                document.getElementById('all-search').style.display = 'none';
+            }
+        </script>
+        <script src="{% static 'Capstone/map.js' %}"></script>
+        <script src="{% static 'Capstone/search.js' %}"></script>
+        <script src="{% static 'Capstone/directions.js' %}"></script>
+        <script src="{% static 'Capstone/traffic.js' %}"></script>
+{% endblock %}

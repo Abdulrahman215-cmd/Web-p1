@@ -1,0 +1,44 @@
+{% extends "network/layout.html" %}
+{% load static %}
+
+{% block body %}
+
+<h3 id="text2">Following</h3>
+{% for track in page_obj %}
+<div class="post1" class="post" data-post-id="{{ track.id }}">
+    <div>
+        <a id="user1" href="{% url 'profile' username=track.poster.username %}"><strong>{{ track.poster }}</strong></a>
+        <p id="time">{{ track.timestamp }}</p> 
+    </div>
+        <p class="body">{{ track.NewPost }}</p>
+    <button id="like-button" class="like-button btn btn-secondary" data-post-id="{{ track.id }}" data-like-url="{% static 'images/like.png' %}" data-csrf-token="{{ csrf_token }}">
+        {% if post.user_liked %}
+            <img id="image" src="{% static 'images/like.png' %}" style="transform: rotate(180deg);">
+            <span id="like-count-{{ track.id }}">{{ track.like_count }}</span>
+        {% else %}
+            <img id="image" src="{% static 'images/like.png' %}" style="transform: rotate(0deg);">
+            <span id="like-count-{{ track.id }}">{{ track.like_count }}</span>
+        {% endif %}
+    </button>
+    
+</div>
+{% endfor %}
+<script src="{% static 'network/like.js' %}"></script>
+<div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">next</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+{% endblock %}

@@ -1,0 +1,65 @@
+{% extends "network/layout.html" %}
+{% load static %}
+
+
+{% block body %}
+<div id="form">
+<h3>Create a Post</h3>
+<form method="post">
+    {% csrf_token %}
+    <div id="formpost">
+        {{ form.NewPost }}
+    </div>
+    <input class="btn btn-primary" id="input" type="submit" value="Post">
+</form>
+</div>
+<hr style="width: 66%;
+      border: 1px solid rgb(208, 206, 206);
+      margin-left: 17%;
+      ">
+<h3 id="text1">All Posts</h3>
+{% for post in page_obj %}
+    <div class="post1" data-post-id="{{ post.id }}">
+        <div>
+            <a id="user1" href="{% url 'profile' username=post.poster.username %}"><strong>{{ post.poster }}</strong></a>
+            <p id="time">{{ post.timestamp }}</p>
+            {% if request.user == post.poster %}
+                <button id="edit" class="edit btn btn-primary">Edit</button>
+            {% endif %}
+        </div>
+            <p class="body">{{ post.NewPost }}</p>
+            <!-- the data was because of cs50 ai, i didnt know they can be used for csrf and url -->
+        <button id="like-button" class="like-button btn btn-secondary" data-post-id="{{ post.id }}" data-like-url="{% static 'images/like.png' %}" data-csrf-token="{{ csrf_token }}">
+            {% if post.user_liked %}
+                <img id="image" src="{% static 'images/like.png' %}" style="transform: rotate(180deg);">
+                <!-- cs50 ai told me to include the post.id in the id -->
+                <span id="like-count-{{ post.id }}">{{ post.like_count }}</span>
+            {% else %}
+                <img id="image" src="{% static 'images/like.png' %}" style="transform: rotate(0deg);">
+                <span id="like-count-{{ post.id }}">{{ post.like_count }}</span>
+            {% endif %}
+        </button>
+        
+    </div>
+{% endfor %}
+<script src="{% static 'network/edit.js' %}"></script>
+<script src="{% static 'network/like.js' %}"></script>
+<div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a id="first" href="?page=1">&laquo; first</a>
+            <a id="previous" href="?page={{ page_obj.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">next</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+{% endblock %}
+
